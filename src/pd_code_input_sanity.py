@@ -4,6 +4,8 @@
 # 如果输入合法，则返回 pd_code
 # 如何输入不合法，则直接报错并退出
 
+import sys
+
 def input_sanity(input_string: str) -> list:
     pd_code = eval(input_string)
     assert isinstance(pd_code, list) # PD_CODE 必须是一个 list
@@ -21,7 +23,9 @@ def input_sanity(input_string: str) -> list:
                 cnt[x] = 0
             cnt[x] += 1
     for x in cnt:
-        assert cnt[x] == 2 # PD_CODE 中每条弧线，必须恰好出现两次
+        if cnt[x] != 2:
+            sys.stderr.write("unavailable pd code: %s\n" % str(input_string))
+            assert cnt[x] == 2 # PD_CODE 中每条弧线，必须恰好出现两次
     return pd_code
 
 if __name__ == "__main__": # 测试程序
